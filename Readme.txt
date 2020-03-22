@@ -1,0 +1,1 @@
+Tutorial URL: https://www.postgresqltutorial.com/postgresql-python/
