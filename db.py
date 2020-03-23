@@ -1,6 +1,7 @@
 import psycopg2
 from config import config
 
+
 class DB:
     """ Database Manager Class"""
 
@@ -17,7 +18,8 @@ class DB:
 
             # connect to the PostgreSQL server
             print('Connecting to the PostgreSQL database...')
-            self.conn = psycopg2.connect(**params)   # ** Python dictionary unpacking
+            # ** Python dictionary unpacking
+            self.conn = psycopg2.connect(**params)
             print('Connect to the PostgreSQL successfully')
             # create a cursor
             cur = self.conn.cursor()
@@ -33,14 +35,13 @@ class DB:
             # close the communication with the PostgreSQL
             cur.close()
 
-            return conn
+            # return conn
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
         # finally:
             # if conn is not None:
             #     conn.close()
             #     print('Database connection closed.')
-
 
     def close(self):
         """ close the connection to the PostgreSQL database server """
@@ -51,7 +52,6 @@ class DB:
                 print('Database connection closed.')
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-
 
     def creat_tables(self):
         """ create tables in the PostgreSQL database """
@@ -109,7 +109,6 @@ class DB:
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
 
-
     def insert_vendor(self, vendor_name):
         """ insert a new vendor into the vendors table """
 
@@ -134,7 +133,6 @@ class DB:
 
         return vendor_id
 
-
     def insert_vendor_list(self, vendor_list):
         """ insert a list of vendors into the vendors table """
 
@@ -150,7 +148,6 @@ class DB:
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
 
-
     def update_vendor(self, vendor_id, vendor_name):
         """ update vendor_name of the vendors table """
 
@@ -159,32 +156,34 @@ class DB:
                 SET vendor_name = %s
                 WHERE vendor_id = %s
                 """
-        
+
         updated_rows = 0
 
         try:
-            cur = conn.cursor()
+            cur = self.conn.cursor()
             cur.execute(sql, (vendor_name, vendor_id))
             updated_rows = cur.rowcount
             self.conn.commit()
+            print('The vendor has been updated')
+
             cur.close()
+
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-        
+
         return updated_rows
 
+    # def get_vendors(self):
+    #     """ get all vendors from the vendors table """
 
-    def get_vendors(self):
-        """ get all vendors from the vendors table """
+    #     try:
+    #         cur = self.conn.cursor()
+    #         cur.execute("SELECT vendor_id, vendor_name FROM vendors ORDER BY vendor_name")
+    #         print("THe number of vendors: ", cur.rowcount)
+    #         row = cur.fetchone()
 
-        try:
-            cur = self.conn.cursor()
-            cur.execute("SELECT vendor_id, vendor_name FROM vendors ORDER BY vendor_name")
-            print("THe number of vendors: ", cur.rowcount)
-            row = cur.fetchone()
+    #         while row is not None:
+    #             print(row)
+    #             row = cur.fetchone()
 
-            while row is not None:
-                print(row)
-                row = cur.fetchone()
-
-            cur.close()
+    #         cur.close()

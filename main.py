@@ -1,11 +1,18 @@
-import db
+from db import DB
 
 if __name__ == '__main__':
+
+    # create database manager object
+    db_manager = DB()
+    db_manager.connect()
+    db_manager.update_vendor(3, 'AKM Semiconductor Incorporation')
+    db_manager.close()
+
     # create database connection
-    conn = db.connect()
+    # conn = db.connect()
 
     # create tables if they are not exist
-    db.creat_tables(conn)
+    # db.creat_tables(conn)
 
     # insert vendors
     # db.insert_vendor(conn, "3M Co.")
@@ -21,4 +28,4 @@ if __name__ == '__main__':
     # ])
 
     # close the database connection
-    db.close(conn)
+    # db.close(conn)
