@@ -1,12 +1,13 @@
 import psycopg2
-from connection import Connection
+from Connection import Connection
 from configparser import ConfigParser
+
 
 class PostgresqlConnection(Connection):
 
     def __init__(self):
         super.__init__(self)
-    
+
     def connect(self):
         try:
             # read connection parameters
@@ -16,4 +17,3 @@ class PostgresqlConnection(Connection):
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-    

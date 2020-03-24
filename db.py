@@ -5,53 +5,53 @@ from config import config
 class DB:
     """ Database Manager Class"""
 
-    def __init__(self):
+    def __init__(self, conn):
         """ Initialize database connection to the PostgreSQL database server """
-        self.conn = None
+        self.conn = conn
 
-    def connect(self):
-        """ Connect to the PostgreSQL database server """
+    # def connect(self):
+    #     """ Connect to the PostgreSQL database server """
 
-        try:
-            # read connection parameters
-            params = config()
+    #     try:
+    #         # read connection parameters
+    #         params = config()
 
-            # connect to the PostgreSQL server
-            print('Connecting to the PostgreSQL database...')
-            # ** Python dictionary unpacking
-            self.conn = psycopg2.connect(**params)
-            print('Connect to the PostgreSQL successfully')
-            # create a cursor
-            cur = self.conn.cursor()
+    #         # connect to the PostgreSQL server
+    #         print('Connecting to the PostgreSQL database...')
+    #         # ** Python dictionary unpacking
+    #         self.conn = psycopg2.connect(**params)
+    #         print('Connect to the PostgreSQL successfully')
+    #         # create a cursor
+    #         cur = self.conn.cursor()
 
-            # execute a statement
-            print('PostgreSQL database version:')
-            cur.execute('SELECT version()')
+    #         # execute a statement
+    #         print('PostgreSQL database version:')
+    #         cur.execute('SELECT version()')
 
-            # display the PostgreSQL database server version
-            db_version = cur.fetchone()
-            print(db_version)
+    #         # display the PostgreSQL database server version
+    #         db_version = cur.fetchone()
+    #         print(db_version)
 
-            # close the communication with the PostgreSQL
-            cur.close()
+    #         # close the communication with the PostgreSQL
+    #         cur.close()
 
-            # return conn
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
-        # finally:
-            # if conn is not None:
-            #     conn.close()
-            #     print('Database connection closed.')
+    #         # return conn
+    #     except (Exception, psycopg2.DatabaseError) as error:
+    #         print(error)
+    #     # finally:
+    #         # if conn is not None:
+    #         #     conn.close()
+    #         #     print('Database connection closed.')
 
-    def close(self):
-        """ close the connection to the PostgreSQL database server """
+    # def close(self):
+    #     """ close the connection to the PostgreSQL database server """
 
-        try:
-            if self.conn is not None:
-                self.conn.close()
-                print('Database connection closed.')
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
+    #     try:
+    #         if self.conn is not None:
+    #             self.conn.close()
+    #             print('Database connection closed.')
+    #     except (Exception, psycopg2.DatabaseError) as error:
+    #         print(error)
 
     def creat_tables(self):
         """ create tables in the PostgreSQL database """
@@ -178,7 +178,8 @@ class DB:
 
     #     try:
     #         cur = self.conn.cursor()
-    #         cur.execute("SELECT vendor_id, vendor_name FROM vendors ORDER BY vendor_name")
+    #         cur.execute(
+    #             "SELECT vendor_id, vendor_name FROM vendors ORDER BY vendor_name")
     #         print("THe number of vendors: ", cur.rowcount)
     #         row = cur.fetchone()
 
